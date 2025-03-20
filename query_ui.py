@@ -29,12 +29,14 @@ def query_ui(kb: KnowledgeBase, llm_config):
                     "You analyze user queries to determine what information to retrieve from a knowledge base."
                     " For a given query, identify: 1) specific concepts to look up, 2) relationships to find,"
                     " or 3) attributes to search for."
-                )
+                ),
+                codeExecutionConfig={"use_docker": False}
             )
             
             analysis_proxy = autogen.UserProxyAgent(
                 name="analysis_proxy",
                 human_input_mode="NEVER",
+                code_execution_config={"use_docker": False},
             )
             
             analysis_proxy.initiate_chat(
@@ -76,12 +78,15 @@ def query_ui(kb: KnowledgeBase, llm_config):
                     "You are an assistant that helps users query a knowledge base."
                     " You have access to information about concepts and their relationships."
                     " When responding to queries, use only the information provided by the knowledge base."
-                )
+                ),
+                codeExecutionConfig={"use_docker": False}
             )
             
             query_proxy = autogen.UserProxyAgent(
                 name="query_proxy",
                 human_input_mode="NEVER",
+                code_execution_config={"use_docker": False},
+
             )
             
             query_proxy.initiate_chat(
