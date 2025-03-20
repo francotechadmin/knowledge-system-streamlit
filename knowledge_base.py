@@ -1,22 +1,18 @@
-import os
 import json
+import streamlit as st
 from typing import Dict, List, Optional
 
-# Knowledge Base Storage
+# Knowledge Base Storage using Streamlit's session_state for browser storage
 class KnowledgeBase:
-    def __init__(self, file_path: str = "knowledge_base.json"):
-        self.file_path = file_path
-        self.data = self._load_data()
-    
-    def _load_data(self) -> Dict:
-        if os.path.exists(self.file_path):
-            with open(self.file_path, "r") as f:
-                return json.load(f)
-        return {"concepts": {}, "relationships": []}
+    def __init__(self):
+        # Initialize knowledge base in session state if it doesn't exist
+        if "knowledge_base" not in st.session_state:
+            st.session_state.knowledge_base = {"concepts": {}, "relationships": []}
+        self.data = st.session_state.knowledge_base
     
     def save_data(self):
-        with open(self.file_path, "w") as f:
-            json.dump(self.data, f, indent=2)
+        # Data is already stored in session_state, no need to write to file
+        st.session_state.knowledge_base = self.data
     
     def add_concept(self, name: str, attributes: Dict):
         """Add or update a concept in the knowledge base"""
@@ -47,3 +43,12 @@ class KnowledgeBase:
             name for name, attrs in self.data["concepts"].items()
             if attrs.get(attribute) == value
         ]
+    
+    def export_data(self) -> Dict:
+        """Export the knowledge base as a dictionary"""
+        return self.data
+    
+    def import_data(self, data: Dict):
+        """Import data into the knowledge base"""
+        self.data = data
+        self.save_data()
