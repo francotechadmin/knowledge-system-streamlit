@@ -30,7 +30,7 @@ def query_ui(kb: KnowledgeBase, llm_config):
                     " For a given query, identify: 1) specific concepts to look up, 2) relationships to find,"
                     " or 3) attributes to search for."
                 ),
-                codeExecutionConfig={"use_docker": False}
+                code_execution_config={"use_docker": False}
             )
             
             analysis_proxy = autogen.UserProxyAgent(
@@ -79,7 +79,7 @@ def query_ui(kb: KnowledgeBase, llm_config):
                     " You have access to information about concepts and their relationships."
                     " When responding to queries, use only the information provided by the knowledge base."
                 ),
-                codeExecutionConfig={"use_docker": False}
+                code_execution_config={"use_docker": False}
             )
             
             query_proxy = autogen.UserProxyAgent(

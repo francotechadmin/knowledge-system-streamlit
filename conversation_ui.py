@@ -22,7 +22,7 @@ def conversation_ui(kb: KnowledgeBase, llm_config):
             " Ask one question at a time, focusing on technical details, processes,"
             " relationships between concepts, and key attributes."
         ),
-        codeExecutionConfig={"use_docker": False}
+        code_execution_config={"use_docker": False}
     )
     
     user_proxy = autogen.UserProxyAgent(
@@ -39,7 +39,7 @@ def conversation_ui(kb: KnowledgeBase, llm_config):
             "You are an assistant that acts as a user to reply to the assistant agent."
             " Your goal is to provide relevant responses to the assistant's questions."
         ),
-        codeExecutionConfig={"use_docker": False}
+        code_execution_config={"use_docker": False}
     )
     
     # Initialize chat history in session state if it doesn't exist

@@ -22,14 +22,13 @@ def extract_knowledge(conversation_text: str, llm_config: Dict) -> Dict:
             " 'concepts' (a dictionary of concept names to their attributes) and"
             " 'relationships' (a list of source-relation-target triples)."
         ),
-        codeExecutionConfig={"use_docker": False}
+        code_execution_config={"use_docker": False}
     )
     
     user_proxy = autogen.UserProxyAgent(
         name="user_proxy",
         human_input_mode="NEVER",
-        code_execution_config={"work_dir": "knowledge_extraction"},
-        codeExecutionConfig={"use_docker": False},
+        code_execution_config={"work_dir": "knowledge_extraction", "use_docker": False},
     )
     
     user_proxy.initiate_chat(
