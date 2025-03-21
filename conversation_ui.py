@@ -12,6 +12,13 @@ def conversation_ui(kb: KnowledgeBase, llm_config):
 
     st.header("Knowledge Extraction Conversation")
 
+    # Button to start a new conversation (always show it, not just after ending)
+    if st.button("Start New Conversation"):
+        st.session_state.messages = []
+        if "domain" in st.session_state:
+            del st.session_state.domain 
+        st.rerun()
+
     # Create the assistant agent
     assistant = autogen.AssistantAgent(
         name="domain_expert_interface",
@@ -58,7 +65,9 @@ def conversation_ui(kb: KnowledgeBase, llm_config):
         else:
             st.info("Please enter a domain to start the conversation.")
             return
-    
+        # Initialize session state variables if they don't exist
+
+
     # Display chat messages from history
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
@@ -105,12 +114,6 @@ def conversation_ui(kb: KnowledgeBase, llm_config):
             for rel in extraction_result.get("relationships", []):
                 if all(k in rel for k in ["source", "relation", "target"]):
                     st.write(f"- {rel['source']} {rel['relation']} {rel['target']}")
-            
-            # Reset conversation for next time
-            if st.button("Start New Conversation"):
-                st.session_state.messages = []
-                st.session_state.domain = None
-                st.rerun()
             
             return
                 
