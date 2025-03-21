@@ -4,3 +4,4 @@ OAI_CONFIG_LIST
 __pycache__
 knowledge_base.json
 .env
+*_audio_*

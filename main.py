@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from knowledge_base import KnowledgeBase
 from conversation_ui import conversation_ui
+from audio_conversation_ui import audio_conversation_ui
 from query_ui import query_ui
 from knowledge_stats import knowledge_base_stats
 
@@ -74,13 +75,15 @@ def main():
     
     # Sidebar navigation
     st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to", ["Conversation", "Query", "Knowledge Base"])
+    page = st.sidebar.radio("Go to", ["Audio Conversation", "Text Conversation", "Query", "Knowledge Base"])
     
     # Add export/import UI to sidebar
     export_import_ui()
     
-    if page == "Conversation":
+    if page == "Text Conversation":
         conversation_ui(kb, llm_config)
+    elif page == "Audio Conversation":
+        audio_conversation_ui(kb, llm_config)
     elif page == "Query":
         query_ui(kb, llm_config)
     elif page == "Knowledge Base":
